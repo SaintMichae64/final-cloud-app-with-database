@@ -114,13 +114,13 @@ def submit(request, course_id):
 
 
 # <HINT> A example method to collect the selected choices from the exam form from the request object
-def extract_answers(request):
-    submitted_anwsers = []
-    for key in request.POST:
-        if key.startswith('choice'):
-            value = request.POST[key]
-#           choice_id = int(value)
-#           submitted_anwsers.append(choice_id)
+    def extract_answers(request):
+       submitted_anwsers = []
+       for key in request.POST:
+           if key.startswith('choice'):
+              value = request.POST[key]
+              choice_id = int(value)
+              submitted_anwsers.append(choice_id)
     return submitted_anwsers
 
 
@@ -130,7 +130,24 @@ def extract_answers(request):
         # Get the selected choice ids from the submission record
         # For each selected choice, check if it is a correct answer or not
         # Calculate the total score
-def show_exam_result(request, course_id, submission_id):
+    def show_exam_result(request, course_id, submission_id):
+        course = Course.objects.get(pk=course_id)
+        submission = Submission.objects.get(pk=submission_id)
+        choices_list = []
+        if submission.choices.all is not None:
+            for choice in submission.choices.all():
+                choices_list.append(choice.id)
+        grade = 0
+        total = 0
+    for question in Question.objects.filter(course=course):
+        if question.is_get_score(choices_list):
+            grade += question.grade
+        total += question.grade
+    context = {}
+    context['course'] = course
+    context['selected_ids'] = choices_list
+    context['grade'] = 100 * grade // total
+    return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
 
 
 

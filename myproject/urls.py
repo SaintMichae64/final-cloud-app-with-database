@@ -17,14 +17,14 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.static import static
 from django.conf import settings
-from my_app import views
-from other_app.views import Home
+#from my_app import views
+#from other_app.views import Home
 from django.urls import include, path
 
 urlpatterns = [
-    path('blog/', include('blog.urls'))
-    path('', Home.as_view(), name='home')
-    path('', views.home, name='home')
+    #path('blog/', include('blog.urls'))
+    #path('', Home.as_view(), name='home')
+    #path('', views.home, name='home')
     path('admin/', admin.site.urls),
     path('onlinecourse/', include('onlinecourse.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
