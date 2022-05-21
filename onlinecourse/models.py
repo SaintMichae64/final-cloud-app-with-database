@@ -95,7 +95,7 @@ class Enrollment(models.Model):
     rating = models.FloatField(default=5.0)
 
 
-# < Question Model with:
+# < Question Model:
 class Question(models.Model):
     # Foreign key to lesson
     # question text
@@ -113,7 +113,7 @@ class Question(models.Model):
             return False
     
 
-    # A sample model method to calculate if learner get the score of the question
+    # Model method to calculate if learner get the score of the question
     def is_get_score(self, selected_ids):
         all_answers = self.choice_set.filter(is_correct=True).count()
         selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
@@ -123,7 +123,7 @@ class Question(models.Model):
             return False
 
 
-#  Choice Model with:
+#  Choice Model:
     # Used to persist choice content for a question
     # One-To-Many (or Many-To-Many if you want to reuse choices) relationship with Question
     # Choice content
